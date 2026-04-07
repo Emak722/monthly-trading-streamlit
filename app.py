@@ -19,13 +19,7 @@ st.caption("Educational demo only — not investment advice. Data from Yahoo Fin
 # ----------------------------
 
 # --- Strategy Parameters (defaults match your notebook cell) ---
-ASSET_TICKERS = [
-    'PDBC','VNQ', 'TLT',
-    'BWX', 'EWJ','IEMG','SCZ','SPY',
-    'QQQ', 'GLD', 'REM',
-    'IEF','VNQI',
-    'TIP','VGK',
-]
+ASSET_TICKERS = ["GLD", "SPY", "QQQ", "IEMG", "XLB", "XLC", "XLE", "XLF", "XLI", "XLK", "XLP", "XLU", "XLV", "XLY", "SHY", "BIL"]
 
 CASH_PROXY_TICKER = "BIL"  # used only if cash filter enabled
 
@@ -368,6 +362,8 @@ with st.sidebar:
     USE_CASH_FILTER = st.checkbox("Use cash filter", value=False)
     run_peek = st.checkbox("Show daily peek-ahead", value=True)
 
+    st.sidebar.write("Asset universe:", ASSET_TICKERS)
+
     st.divider()
     run_btn = st.button("Run backtest", type="primary")
 
@@ -446,12 +442,12 @@ if run_btn:
     st.subheader("Holdings over time (month-end decisions)")
     holdings_table = holdings_df.copy()
     holdings_table["holdings"] = holdings_table["holdings"].apply(lambda x: ", ".join(x))
-    st.dataframe(holdings_table.tail(60), use_container_width=True)
+    st.dataframe(holdings_table.tail(60), width='stretch')
 
     # Momentum table (recent)
     st.subheader("Momentum (recent month-ends)")
     if momentum_df is not None and not momentum_df.empty:
-        st.dataframe(momentum_df.tail(24), use_container_width=True)
+        st.dataframe(momentum_df.tail(24), width='stretch')
 
     # Daily peek
     if run_peek:
